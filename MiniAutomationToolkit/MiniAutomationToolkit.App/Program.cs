@@ -69,3 +69,14 @@ catch (Exception ex)
 {
     Console.WriteLine($"Error: {ex.Message}");
 }
+
+// Задание 6. «Умная конфигурация»
+var config = new AppConfig(Path.Combine(".", "MiniAutomationToolkit.App", "data", "appsettings.txt"));
+
+Console.WriteLine(config.GetSetting<string>("baseUrl"));
+Console.WriteLine(config.GetSetting<int>("timeout"));
+Console.WriteLine(config.GetSetting<bool>("headless"));
+Console.WriteLine(config.GetSetting<int>("retryCount"));
+
+// Генерируем ошибку "Key 'missedKey' not found in configuration."
+// Console.WriteLine(config.GetSetting<int>("missedKey"));
