@@ -1,5 +1,7 @@
 ﻿using MiniAutomationToolkit.Core.Models;
 using MiniAutomationToolkit.Core.Services;
+using System.Diagnostics;
+
 
 // Задание 2. «Калькулятор скидок»
 
@@ -95,3 +97,10 @@ PrintStringInfo("http://example.com");
 PrintStringInfo("ftp://files.example.com");
 PrintStringInfo(null);
 PrintStringInfo("HTTPS://SITE.EXAMPLE.COM");
+
+// Задание 8. «Имитация длительной операции»
+var simulator = new LongOperationSimulator();
+var stopwatch = Stopwatch.StartNew();
+var result = await simulator.LongOperationAsync();
+stopwatch.Stop();
+Console.WriteLine($"Execution time: {stopwatch.ElapsedMilliseconds} ms. Result: {result}");
