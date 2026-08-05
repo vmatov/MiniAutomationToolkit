@@ -44,4 +44,28 @@ var badUserTwo = new UserDto("Jane Doe", "");
 var badUserThree = new UserDto("Bob Johnson", "bobexample.com");
 var badUserFour = new UserDto("Alice Brown", "al  ice@example.com");
 
+// Задание 5. «Базовая страница»
+var loginPage = new LoginPage();
+var homePage = new HomePage();
+loginPage.Load();
+homePage.Load();
 
+var pages = new List<BasePage> { loginPage, homePage };
+var uniqueItems = pages.GroupBy(x => x.PageName)
+                      .Select(g => g.First())
+                      .ToList();
+try
+{
+if (uniqueItems.Count != pages.Count)
+{
+    throw new InvalidOperationException("Not all page URLs are unique");
+}
+else
+{
+    Console.WriteLine("All page URLs are unique");
+}
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
