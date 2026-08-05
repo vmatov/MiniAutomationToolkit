@@ -22,3 +22,26 @@ Console.WriteLine($"First screenshot found: {firstScreenshot}");
 // Генерируем ошибку
 // var secondScreenshot = FileSearcher.FindFirstScreenshot(fileNamesWithoutScreenshots);
 // Console.WriteLine($"Second screenshot found: {secondScreenshot}");
+
+// Задание 4. «Неизменяемый пользователь»
+var userOne = new UserDto("Alex Smith", "alex@example.com");
+var userTwo = new UserDto("Alex Smith", "alex@example.com");
+if (userOne == userTwo)
+{
+    Console.WriteLine("Users are equal");
+}
+else
+{
+    Console.WriteLine("Users are not equal");
+}
+
+// Ошибка при попытке изменить значение пользователя
+// userTwo.Email = "";
+
+// Некорректные пользователи
+var badUserOne = new UserDto("", "john@example.com");
+var badUserTwo = new UserDto("Jane Doe", "");
+var badUserThree = new UserDto("Bob Johnson", "bobexample.com");
+var badUserFour = new UserDto("Alice Brown", "al  ice@example.com");
+
+
