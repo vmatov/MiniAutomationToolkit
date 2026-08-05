@@ -80,3 +80,18 @@ Console.WriteLine(config.GetSetting<int>("retryCount"));
 
 // Генерируем ошибку "Key 'missedKey' not found in configuration."
 // Console.WriteLine(config.GetSetting<int>("missedKey"));
+
+// Задание 7. «Расширяем возможности строк»
+void PrintStringInfo(string input)
+{
+    if (input == null)
+    {
+        input = "null";
+    }
+    Console.WriteLine($"{input} -> {input.HasHttpScheme()}");
+}
+PrintStringInfo("https://google.com");
+PrintStringInfo("http://example.com");
+PrintStringInfo("ftp://files.example.com");
+PrintStringInfo(null);
+PrintStringInfo("HTTPS://SITE.EXAMPLE.COM");
