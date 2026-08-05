@@ -104,3 +104,13 @@ var stopwatch = Stopwatch.StartNew();
 var result = await simulator.LongOperationAsync();
 stopwatch.Stop();
 Console.WriteLine($"Execution time: {stopwatch.ElapsedMilliseconds} ms. Result: {result}");
+
+// Задание 9. «Логгер ошибок»
+var errorLogger = new ErrorLogger();
+var sourceFilePath = Path.Combine(".", "MiniAutomationToolkit.App", "data", "input.txt");
+var logFilePath = Path.Combine(".", "MiniAutomationToolkit.App", "data", "errors.log");
+var content = errorLogger.TryReadFile(sourceFilePath, logFilePath);
+
+// Получаем ошибку при попытке прочитать несуществующий файл
+sourceFilePath = Path.Combine(".", "MiniAutomationToolkit.App", "data", "missing.txt");
+errorLogger.TryReadFile(sourceFilePath, logFilePath);
