@@ -16,8 +16,8 @@ void DetailPrint(Client client)
 }
 
 // Задание 3. «Поиск в хаосе»
-var fileNames = new List<string>{"screen_001.log", "error_2026.log", "notes_draft.txt", "screen_002.png", "debug_dump.log", "readme.txt", "screen_screenshot_v2.png", "system_trace.log", "todo_list.txt", "screen_003.png", "access_denied.log", "config_backup.txt", "screen_final.png", "crash_report.log", "instructions.txt", "screen_dashboard.png", "server_response.log", "temp_scratchpad.txt", "screen_preview.png", "network_traffic.log"};
-var fileNamesWithoutScreenshots = new List<string>{"error_2026.log", "notes_draft.txt", "debug_dump.log", "readme.txt", "access_denied.log", "config_backup.txt", "crash_report.log", "instructions.txt", "server_response.log", "temp_scratchpad.txt", "network_traffic.log"};
+var fileNames = new List<string> { "screen_001.log", "error_2026.log", "notes_draft.txt", "screen_002.png", "debug_dump.log", "readme.txt", "screen_screenshot_v2.png", "system_trace.log", "todo_list.txt", "screen_003.png", "access_denied.log", "config_backup.txt", "screen_final.png", "crash_report.log", "instructions.txt", "screen_dashboard.png", "server_response.log", "temp_scratchpad.txt", "screen_preview.png", "network_traffic.log" };
+var fileNamesWithoutScreenshots = new List<string> { "error_2026.log", "notes_draft.txt", "debug_dump.log", "readme.txt", "access_denied.log", "config_backup.txt", "crash_report.log", "instructions.txt", "server_response.log", "temp_scratchpad.txt", "network_traffic.log" };
 var firstScreenshot = FileSearcher.FindFirstScreenshot(fileNames);
 Console.WriteLine($"First screenshot found: {firstScreenshot}");
 
@@ -58,14 +58,14 @@ var uniqueItems = pages.GroupBy(x => x.PageName)
                       .ToList();
 try
 {
-if (uniqueItems.Count != pages.Count)
-{
-    throw new InvalidOperationException("Not all page URLs are unique");
-}
-else
-{
-    Console.WriteLine("All page URLs are unique");
-}
+    if (uniqueItems.Count != pages.Count)
+    {
+        throw new InvalidOperationException("Not all page URLs are unique");
+    }
+    else
+    {
+        Console.WriteLine("All page URLs are unique");
+    }
 }
 catch (Exception ex)
 {
@@ -131,3 +131,29 @@ catch (ValidationException ex)
 {
     Console.WriteLine(ex.Message);
 }
+
+// Задание 11. «Склад товаров»
+var csvFilePath = Path.Combine(".", "MiniAutomationToolkit.App", "data", "products.csv");
+var products = ProductRepository.LoadFromCsv(csvFilePath);
+// Небольшой метод чтобы вывести требуемую в задании информацию о товарах категории Food
+void PrintAffordableFood(int affordablePrice)
+{
+    var productNames = ProductRepository.GetAffordableProducts(products, ProductCategory.Food, affordablePrice);
+if (productNames.Count == 0)
+{
+    Console.WriteLine($"No products found within the price range of {affordablePrice}");
+}
+else
+{
+Console.WriteLine($"Within the price range of {affordablePrice}, there are {productNames.Count} Food category products:");
+foreach (var name in productNames)
+{
+    Console.WriteLine($"- {name}");
+}
+}
+}
+
+PrintAffordableFood(10);
+PrintAffordableFood(1);
+PrintAffordableFood(0);
+
