@@ -114,3 +114,20 @@ var content = errorLogger.TryReadFile(sourceFilePath, logFilePath);
 // Получаем ошибку при попытке прочитать несуществующий файл
 sourceFilePath = Path.Combine(".", "MiniAutomationToolkit.App", "data", "missing.txt");
 errorLogger.TryReadFile(sourceFilePath, logFilePath);
+
+// Задание 10. «Защитный валидатор»
+var testNumber = 5;
+var testParameterName = "testNumber";
+// Примеры значения, при которых будет падать ошибка валидации
+// var testNumber = 0;
+// var testNumber = -5;
+
+try
+{
+    Guard.EnsurePositive(testNumber, testParameterName);
+    Console.WriteLine($"Validation passed for {testParameterName} = {testNumber}");
+}
+catch (ValidationException ex)
+{
+    Console.WriteLine(ex.Message);
+}
