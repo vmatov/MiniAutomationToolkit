@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using NUnit.Framework;
 
 namespace AQAProject
 {
@@ -11,7 +12,7 @@ namespace AQAProject
         [OneTimeSetUp]
         public void Setup()
         {
-            
+
             client = new HttpClient
             {
                 BaseAddress = new Uri("https://reqres.in/api/")
@@ -26,6 +27,7 @@ namespace AQAProject
             using HttpResponseMessage response = await client.GetAsync("users/2");
             response.EnsureSuccessStatusCode();
         }
+
         [Test]
         public async Task Test2()
         {
@@ -33,6 +35,42 @@ namespace AQAProject
             string jsonGet = await response.Content.ReadAsStringAsync();
             UserResponseDTO userResponse = JsonSerializer.Deserialize<UserResponseDTO>(jsonGet);
             UserDataDTO user = userResponse.Data;
+        }
+
+        [Test]
+        public async Task Test3()
+        {
+            var createUserRequest = new CreateUserRequestDTO
+            {
+                Name = "Stannis",
+                Job = "Baratheon Inc."
+            };
+
+            using HttpResponseMessage response = await client.PostAsJsonAsync("users", createUserRequest);
+            string jsonPost = await response.Content.ReadAsStringAsync();
+            CreateUserResponseDTO userResponse = JsonSerializer.Deserialize<CreateUserResponseDTO>(jsonPost);
+        }
+
+        [Test]
+        public async Task Test4()
+        {
+            var createUserRequest = new CreateUserRequestDTO
+            {
+                Name = "Stannis",
+                Job = "One true king"
+            };
+
+            using HttpResponseMessage response = await client.PutAsJsonAsync("users/2", createUserRequest);
+            response.EnsureSuccessStatusCode();
+
+        }
+
+        [Test]
+        public async Task Test5()
+        {
+            using HttpResponseMessage response = await client.DeleteAsync("users/2");
+            response.EnsureSuccessStatusCode();
+
         }
 
         [OneTimeTearDown]
