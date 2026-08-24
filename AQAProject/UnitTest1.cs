@@ -1,10 +1,11 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using NUnit.Framework;
+using AQAProject.DTO.UsersDTO;
 
 namespace AQAProject
 {
-    public class Tests
+    public class TestBase
     {
 
         private static HttpClient client;
