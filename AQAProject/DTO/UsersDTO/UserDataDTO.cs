@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
+namespace AQAProject.DTO.UsersDTO;
+
 public class UserDataDTO
 {
     [JsonPropertyName("id")]
