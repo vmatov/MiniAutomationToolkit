@@ -48,6 +48,19 @@ namespace AQAProject.Tests
         [Test]
         public async Task TestThree()
         {
+            var request = new CreateUserRequestDTO
+            {
+                Name = "Stannis",
+                Job = "One true king"
+            };
+            var response = await api.UpdateUserAsync(2, request);
+            Assert.That(response.Name, Is.EqualTo(request.Name));
+            Assert.That(response.Job, Is.EqualTo(request.Job));
+        }
+
+        [Test]
+        public async Task TestFour()
+        {
             var deleteResult = await api.DeleteUserAsync(2);
             Assert.That(deleteResult.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }

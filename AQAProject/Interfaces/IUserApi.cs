@@ -16,6 +16,9 @@ namespace AQAProject.Interfaces
         [Post("/users")]
         Task<CreateUserResponseDTO> CreateUserAsync([Body] CreateUserRequestDTO request);
 
+        [Put("/users/{id}")]
+        Task<CreateUserResponseDTO> UpdateUserAsync(int id, [Body] CreateUserRequestDTO request);
+
         [Delete("/users/{id}")]
         Task<ApiResponse<string>> DeleteUserAsync(int id);
     }

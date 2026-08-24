@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AQAProject.DTO.OrderDataDTO;
+using AQAProject.Methods;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using AQAProject.DTO.OrderDataDTO;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 
 namespace AQAProject.Tests
@@ -11,13 +12,12 @@ namespace AQAProject.Tests
     public class OrderJsonTests
     {
         private OrderDTO order;
+
         [OneTimeSetUp] 
         public void SetUp() 
         {
-        var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "resources", "OrderData.json");
-        string json = File.ReadAllText(path);
+            order = FileReader.ReadFile<OrderDTO>("OrderData.json");
 
-        order = JsonSerializer.Deserialize<OrderDTO>(json);
         }
 
         [Test]
@@ -34,7 +34,6 @@ namespace AQAProject.Tests
         [Test]
         public void TestTwo_CheckItemsSum()
         {
-            //decimal sum = 0m;
             var sum = order.Items.Sum(item => item.Price * item.Quantity);
             sum.Should().Be(order.Summary.ItemsTotal);
         }
