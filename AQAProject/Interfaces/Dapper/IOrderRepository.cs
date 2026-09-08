@@ -9,5 +9,6 @@ namespace AQAProject.Interfaces.Dapper
     public interface IOrderRepository
     {
         Task<OrderDTO> GetOrderByUserIDAsync(int userId);
+        Task<IEnumerable<OrderDTO>> GetOrdersByIDAsync(IEnumerable<long> ids);
     }
 }

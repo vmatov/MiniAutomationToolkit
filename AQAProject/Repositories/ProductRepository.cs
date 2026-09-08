@@ -22,11 +22,11 @@ namespace AQAProject.Repositories
             return product;
         }
 
-        public async Task<ProductDTO> GetProductByCategoryIdAsync(int id)
+        public async Task<IEnumerable<ProductDTO>> GetProductsByCategoryIdAsync(int id)
         {
             using var db = new SqliteConnection(connection);
-            var product = await db.QueryFirstOrDefaultAsync<ProductDTO>("SELECT * FROM Products WHERE CategoryId=@id", new { id });
-            return product;
+            var products = await db.QueryAsync<ProductDTO>("SELECT * FROM Products WHERE CategoryId=@id", new { id });
+            return products;
         }
     }
 }

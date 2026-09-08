@@ -82,6 +82,50 @@ namespace AQAProject.Tests
             productIds.Should().BeEquivalentTo(new[] { 4L });
         }
 
+        [Test]
+        public async Task Test8_CheckCitiesByCategory()
+        {
+            var productRepo = p.Provider.GetService<IProductRepository>();
+            var itemsRepo = p.Provider.GetService<IOrderItemRepository>();
+            var orderRepo = p.Provider.GetService<IOrderRepository>();
+            var addressRepo = p.Provider.GetService<IAddressRepository>();
+
+            var accessoryProductsIds = (await productRepo.GetProductsByCategoryIdAsync(6)).Select(product => product.id).ToList();
+
+            var orderIds = (await itemsRepo.GetOrderItemsByProductIdsAsync(accessoryProductsIds)).Select(item => item.orderId).Distinct().ToList();
+
+            var userIds = (await orderRepo.GetOrdersByIDAsync(orderIds)).Select(order => order.userId).Distinct().ToList();
+
+            var cities = new List<string>();
+            foreach (var userId in userIds)
+            {
+                var address = await addressRepo.GetAddressByUserId((int)userId);
+                cities.Add(address.city);
+            }
+            userIds.Count.Should().Be(cities.Count); //Смотрим что количество городов == количеству пользователей, значит города разные
+        }
+
+        [Test]
+        public async Task TvBuyersAlsoBuyAccessoriesAsync()
+        {
+            var productRepo = p.Provider.GetService<IProductRepository>();
+            var itemsRepo = p.Provider.GetService<IOrderItemRepository>();
+            var orderRepo = p.Provider.GetService<IOrderRepository>();
+
+            var tvProductsIds = (await productRepo.GetProductsByCategoryIdAsync(4)).Select(product => product.id).ToList();
+
+            var tvOrderIds = (await itemsRepo.GetOrderItemsByProductIdsAsync(tvProductsIds)).Select(item => item.orderId).Distinct().ToList();
+
+            var tvBuyerIds = (await orderRepo.GetOrdersByIDAsync(tvOrderIds)).Select(order => order.userId).Distinct().ToList();
+
+            var accessoriesProductsIds = (await productRepo.GetProductsByCategoryIdAsync(6)).Select(product => product.id).ToList();
+
+            var accessoriesOrderIds = (await itemsRepo.GetOrderItemsByProductIdsAsync(accessoriesProductsIds)).Select(item => item.orderId).Distinct().ToList();
+
+            var accessoriesyBuyerIds = (await orderRepo.GetOrdersByIDAsync(accessoriesOrderIds)).Select(order => order.userId).Distinct().ToList();
+
+            tvBuyerIds.Should().BeSubsetOf(accessoriesyBuyerIds);
+        }
 
         //[Test]
         public async Task InitialiseTest()

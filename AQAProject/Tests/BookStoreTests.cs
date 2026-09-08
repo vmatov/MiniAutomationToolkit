@@ -109,7 +109,25 @@ namespace AQAProject.Tests
             response.Should().NotBeNull();
         }
 
-        
+        [Test]
+        public async Task Test008_AddBookWithInvalidISBNAsync()
+        {
+            var token = await GetTokenAsync();
+
+            var listOfBooks = await api.GetBookListAsync();
+            var rndIsbn = "INVALID_ISBN";
+
+            var userId = await GetUsersIdAsync();
+
+            var request = new AddCollectionOfBooksToUserDTO
+            (
+                userId,
+                new List<CollectionOfIsbnsDTO> { new CollectionOfIsbnsDTO(rndIsbn) }
+            );
+
+            Func<Task> act = async () => await api.AddBookToUserAsync(request, token: null);
+            act.Should().ThrowAsync<ApiException>();
+        }
 
         [Test]
         public async Task SendInvalidRequestAsync()

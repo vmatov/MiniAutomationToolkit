@@ -25,5 +25,15 @@ namespace AQAProject.Repositories
             );
             return order;
         }
+
+        public async Task<IEnumerable<OrderDTO>> GetOrdersByIDAsync(IEnumerable<long> ids)
+        {
+            using var db = new SqliteConnection(connection);
+            var orders = await db.QueryAsync<OrderDTO>(
+                "SELECT * FROM Orders WHERE Id IN @Ids",
+                new { Ids = ids }
+            );
+            return orders;
+        }
     }
 }

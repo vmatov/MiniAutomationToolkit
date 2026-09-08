@@ -10,5 +10,6 @@ namespace AQAProject.Interfaces.Dapper
     {
 
         Task<IEnumerable<OrderItemsDTO>> GetItemsByOrderIdAsync(long orderId);
+        Task<IEnumerable<OrderItemsDTO>> GetOrderItemsByProductIdsAsync(IEnumerable<long> productIds);
     }
 }
