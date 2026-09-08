@@ -21,5 +21,12 @@ namespace AQAProject.Repositories
             var product = await db.QueryFirstOrDefaultAsync<ProductDTO>("SELECT * FROM Products WHERE Id=@id", new { id });
             return product;
         }
+
+        public async Task<ProductDTO> GetProductByCategoryIdAsync(int id)
+        {
+            using var db = new SqliteConnection(connection);
+            var product = await db.QueryFirstOrDefaultAsync<ProductDTO>("SELECT * FROM Products WHERE CategoryId=@id", new { id });
+            return product;
+        }
     }
 }
