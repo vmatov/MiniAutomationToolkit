@@ -9,7 +9,7 @@ namespace AQAProject.Interfaces.Dapper
     public interface IProductRepository
     {
         Task<ProductDTO> GetProductByIDAsync(int id);
-        Task<ProductDTO> GetProductByCategoryIdAsync(int id);
+        Task<IEnumerable<ProductDTO>> GetProductsByCategoryIdAsync(int id);
 
 
     }
