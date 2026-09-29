@@ -10,8 +10,7 @@ namespace AQAProject.Pages.SauceDemo
         private readonly IPage Page;
 
         private ILocator CheckoutBtn => Page.Locator("[data-test='checkout']");
-
-
+        private ILocator CartItem => Page.Locator(".cart_item");
 
         public CartPage(IPage page)
         {
@@ -20,7 +19,7 @@ namespace AQAProject.Pages.SauceDemo
 
         public async Task CheckItemByName(string name)
         {
-            await Assertions.Expect(Page.Locator(".cart_item").Filter(new() { HasText = name })).ToBeVisibleAsync();
+            await Assertions.Expect(CartItem.Filter(new() { HasText = name })).ToBeVisibleAsync();
         }
 
         public async Task ClickCheckoutBtn()

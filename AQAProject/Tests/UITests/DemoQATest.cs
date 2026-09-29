@@ -17,8 +17,6 @@ namespace AQAProject.Tests.UITests
 
             await selectMenuPage.OpenSelectMenuPage();
             await selectMenuPage.SelectOptionFromSelectOneDropdown(option);
-
-
         }
     }
 }

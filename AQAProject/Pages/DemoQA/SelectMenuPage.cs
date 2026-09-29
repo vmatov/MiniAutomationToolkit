@@ -30,8 +30,6 @@ namespace AQAProject.Pages.DemoQA
             await SelectOneDropdown.ClickAsync();
             await SelectOneDropdownOption.Filter(new() { HasText = option }).ClickAsync();
             await Assertions.Expect(SelectOneDropdownValue).ToHaveTextAsync(option);
-
-
         }
     }
 }

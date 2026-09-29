@@ -9,6 +9,7 @@ namespace AQAProject.Pages.SauceDemo
     {
         private readonly IPage Page;
         private ILocator CartIcon => Page.Locator("[data-test='shopping-cart-link']");
+        private ILocator InventoryItem => Page.Locator(".inventory_item");
 
         private string url = "https://www.saucedemo.com/inventory.html";
 
@@ -24,7 +25,7 @@ namespace AQAProject.Pages.SauceDemo
 
         public async Task AddItemByName(string name)
         {
-            await Page.Locator(".inventory_item")
+            await InventoryItem
                 .Filter(new() { HasText = name })
                 .GetByRole(AriaRole.Button, new() { Name = "Add to cart" })
                 .ClickAsync();
