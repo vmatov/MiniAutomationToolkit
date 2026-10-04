@@ -40,6 +40,7 @@ namespace AQAProject.Tests
         }
 
         [Test]
+        [Category("QA")]
         public async Task Test002_GetToken()
         {
             var credentials = new UserCreateBodyDTO("Magnus", "StrongPass123!");
