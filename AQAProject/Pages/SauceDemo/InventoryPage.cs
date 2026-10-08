@@ -23,6 +23,12 @@ namespace AQAProject.Pages.SauceDemo
             return Page.Url == url;
         }
 
+        public async Task CheckIfPageLoaded()
+        {
+            await Assertions.Expect(Page).ToHaveURLAsync(url);
+            await Assertions.Expect(InventoryItem.First).ToBeVisibleAsync();
+        }
+
         public async Task AddItemByName(string name)
         {
             await InventoryItem

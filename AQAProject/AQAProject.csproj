@@ -9,6 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\profilePic.jpeg" />
+    <None Remove="resources\SauceDemoLogins.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\profilePic.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\SauceDemoLogins.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
     <PackageReference Include="Dapper" Version="2.1.79" />
     <PackageReference Include="FluentAssertions" Version="8.10.0" />
