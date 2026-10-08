@@ -1,4 +1,5 @@
-﻿using AQAProject.Pages.SauceDemo;
+﻿using AQAProject.DataProvider;
+using AQAProject.Pages.SauceDemo;
 using FluentAssertions;
 using Microsoft.Playwright;
 using NUnit.Framework.Internal;
@@ -9,6 +10,7 @@ using System.Text;
 
 namespace AQAProject.Tests.UITests
 {
+    [TestFixture]
     public class SauceDemoTest : BaseTest
     {
         [Test]
@@ -67,5 +69,20 @@ namespace AQAProject.Tests.UITests
             await checkoutPage.CheckCompleateHeaderAsync();
         }
 
+        [TestCaseSource(typeof(EmailProvider),
+            nameof(EmailProvider.GetLoginCases))]
+        public async Task Test003_CheckAuthorisationForMultipleUsers(string login, string password)
+        {
+            DemoLoginPage loginPage = new DemoLoginPage(Page);
+            InventoryPage inventoryPage = new InventoryPage(Page);
+
+            await loginPage.OpenLoginPageAsync();
+
+
+            await loginPage.OpenLoginPageAsync();
+            await loginPage.FillLoginFormAsync(login, password);
+            await inventoryPage.CheckIfPageLoaded();
+
+        }
     }
 }

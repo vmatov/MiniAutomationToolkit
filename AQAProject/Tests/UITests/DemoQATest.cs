@@ -1,5 +1,6 @@
 ﻿using AQAProject.Enums;
 using AQAProject.Pages.DemoQA;
+using AQAProject.Pages.SauceDemo;
 using AQAProject.Storages.ForUI.Builders;
 using AQAProject.Storages.ForUI.Models;
 using FluentAssertions;
@@ -23,24 +24,28 @@ namespace AQAProject.Tests.UITests
             await selectMenuPage.SelectOptionFromSelectOneDropdown(option);
         }
         [Test]
-        public async Task FillStudentRegistrationForm()
+        public async Task Test002_FillStudentRegistrationForm()
         {
-            await Page.GotoAsync("https://demoqa.com/automation-practice-form");
+            RegistrationPage registrationPage = new RegistrationPage(Page);
+
+            await registrationPage.GoToPage();
 
             StudentRegistrationBuilder builder = new StudentRegistrationBuilder();
-            var studentData = builder.WithFirstName("Rajesh")
-                .WithLastName("Kutrapalli")
+            var studentData = builder.WithFirstName("Howard")
+                .WithLastName("Wolowitz")
+                .WithEmail("howard.wolowitz@magic.com")
                 .WithGender(GenderType.Male)
+                .WithMobile("8005553535")
+                .WithDateOfBirth(new DateTime(1981, 12, 9))
+                .WithSubjects("Maths", "Physics")
+                .WithHobbies(HobbyType.Music, HobbyType.Sports)
+                .WithPicture("resources/profilePic.jpeg")
+                .WithAddress("123 Main St, Pasadena, CA")
+                .WithLocation("NCR", "Delhi")
                 .Build();
-            await FillAllFormFieldAsync(studentData);
-        }
-
-        //ЭТО В КЛАССЕ СТРАНИЦЫ, ПО ВСЕМ ПРАВИЛАМ!
-        //ТУТ ЭТО ДЛЯ ДЕМОНСТРАЦИИ, КАК РАБОТАТЬ С ПАТТЕРНОМ И КАК ПЕРЕДАВАТЬ ДАННЫЕ
-        public async Task FillAllFormFieldAsync(StudentRegistrationFormModel studentData)
-        {
-            await Page.Locator("#firstName").FillAsync(studentData.FirstName);
-            await Page.Locator("#lastName").FillAsync(studentData.LastName);
+            await registrationPage.FillAllFormFieldAsync(studentData);
+            await registrationPage.SubmitData();
+            await registrationPage.CheckConfirmForm(studentData);
         }
     }
 }
